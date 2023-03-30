@@ -1,10 +1,12 @@
 import express, { Express } from 'express'
-import HealthCheckController, {
-  healthCheck,
-} from '../controllers/HealthCheckController'
+import HealthCheckController from '../controllers/HealthCheckController'
 
 const router = express.Router()
 
 router.get('/', HealthCheckController.healthCheck)
 
-export default router
+const register = (app: Express) => {
+  app.use('/health', router)
+}
+
+export default { register }
