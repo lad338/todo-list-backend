@@ -24,10 +24,15 @@ const listUndone = async (skip?: number, title?: string) => {
   return await ItemRepository.listUndone(50, skip, title)
 }
 
+const deleteAll = async () => {
+  return await ItemRepository.deleteAll()
+}
+
 export default {
   add,
   updateDone,
   updateTitle,
   listUndone,
   listDone,
+  deleteAll,
 }

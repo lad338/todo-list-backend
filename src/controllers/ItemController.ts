@@ -63,8 +63,24 @@ const list = async (req: Request, res: Response) => {
   }
 }
 
+const deleteAll = async (req: Request, res: Response) => {
+  try {
+    await ItemService.deleteAll()
+    res.send({
+      success: true,
+    })
+  } catch (e) {
+    console.log(`[error][delete] e: ${e}`)
+    res.status(500)
+    res.send({
+      success: false,
+    })
+  }
+}
+
 export default {
   add,
   patch,
   list,
+  deleteAll,
 }

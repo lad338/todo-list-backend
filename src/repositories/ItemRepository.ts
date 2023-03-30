@@ -12,10 +12,7 @@ const getById = async (id: string) => {
 }
 
 const save = async (id: string, item: Partial<IItem>) => {
-  console.log(item)
   const f = await model.findByIdAndUpdate(id, item).exec()
-  console.log(f)
-  console.log(await model.findById(id).exec())
 }
 
 const setUndone = async (id: string) => {
@@ -51,6 +48,10 @@ const listUndone = async (count: number, skip?: number, title?: string) => {
     .exec()
 }
 
+const deleteAll = async () => {
+  await model.deleteMany({}).exec()
+}
+
 export default {
   add,
   getById,
@@ -58,4 +59,5 @@ export default {
   setUndone,
   listUndone,
   listDone,
+  deleteAll,
 }

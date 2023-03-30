@@ -7,6 +7,7 @@ const router = express.Router()
 router.post('/', bodyParser.json(), ItemController.add)
 router.patch('/:id', bodyParser.json(), ItemController.patch)
 router.get('/', ItemController.list)
+router.delete('/', ItemController.deleteAll)
 
 const register = (app: Express) => {
   app.use('/items', router)
