@@ -12,7 +12,7 @@ const getById = async (id: string) => {
 }
 
 const save = async (id: string, item: Partial<IItem>) => {
-  const f = await model.findByIdAndUpdate(id, item).exec()
+  await model.findByIdAndUpdate(id, item).exec()
 }
 
 const setUndone = async (id: string) => {
