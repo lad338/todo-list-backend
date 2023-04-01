@@ -70,7 +70,23 @@ const deleteAll = async (req: Request, res: Response) => {
       success: true,
     })
   } catch (e) {
-    console.log(`[error][delete] e: ${e}`)
+    console.log(`[error][deleteAll] e: ${e}`)
+    res.status(500)
+    res.send({
+      success: false,
+    })
+  }
+}
+
+const deleteById = async (req: Request, res: Response) => {
+  try {
+    const id = req.params.id as string
+    await ItemService.deleteById(id)
+    res.send({
+      success: true,
+    })
+  } catch (e) {
+    console.log(`[error][deleteById] e: ${e}`)
     res.status(500)
     res.send({
       success: false,
@@ -83,4 +99,5 @@ export default {
   patch,
   list,
   deleteAll,
+  deleteById,
 }

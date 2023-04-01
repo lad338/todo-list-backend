@@ -52,6 +52,10 @@ const deleteAll = async () => {
   await model.deleteMany({}).exec()
 }
 
+const deleteById = async (id: string) => {
+  await model.findByIdAndDelete(id).exec()
+}
+
 export default {
   add,
   getById,
@@ -60,4 +64,5 @@ export default {
   listUndone,
   listDone,
   deleteAll,
+  deleteById,
 }

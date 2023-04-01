@@ -28,6 +28,10 @@ const deleteAll = async () => {
   return await ItemRepository.deleteAll()
 }
 
+const deleteById = async (id: string) => {
+  return await ItemRepository.deleteById(id)
+}
+
 export default {
   add,
   updateDone,
@@ -35,4 +39,5 @@ export default {
   listUndone,
   listDone,
   deleteAll,
+  deleteById,
 }
