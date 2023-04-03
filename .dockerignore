@@ -1,0 +1,13 @@
+Dockerfile
+docker*.yml
+
+.git
+.gitignore
+.config
+
+.npm
+.vscode
+.idea
+node_modules
+
+README.md
