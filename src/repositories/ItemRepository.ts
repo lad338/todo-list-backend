@@ -29,7 +29,7 @@ const listDone = async (limit: number, title?: string) => {
   return await model
     .where({
       doneTime: { $exists: true },
-      title: { $regex: `^${title || ''}` },
+      title: { $regex: `^${title || ''}`, $options: 'i' },
     })
     .sort({ doneTime: 'desc', title: 'asc' })
     .limit(limit)
@@ -39,7 +39,7 @@ const listDone = async (limit: number, title?: string) => {
 const listUndone = async (limit: number, skip?: number, title?: string) => {
   const where = {
     doneTime: { $exists: false },
-    title: { $regex: `^${title || ''}` },
+    title: { $regex: `^${title || ''}`, $options: 'i' },
   }
 
   return {
