@@ -50,8 +50,11 @@ const list = async (req: Request, res: Response) => {
     const skip = parseInt(qSkip || '0')
     const qTitle = req.query.title as string | undefined
 
+    const undoneResults = await ItemService.listUndone(skip, qTitle)
+
     res.send({
-      undone: await ItemService.listUndone(skip, qTitle),
+      hasMore: undoneResults.hasMore,
+      undone: undoneResults.list,
       done: await ItemService.listDone(qTitle),
     })
   } catch (e) {

@@ -24,3 +24,7 @@ db.items.createIndex({
 db.items.createIndex({
   title: 1,
 })
+db.items.createIndex({
+  doneTime: -1,
+  title: 1,
+})

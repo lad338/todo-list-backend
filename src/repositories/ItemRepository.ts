@@ -25,27 +25,32 @@ const setUndone = async (id: string) => {
   }
 }
 
-const listDone = async (count: number, title?: string) => {
+const listDone = async (limit: number, title?: string) => {
   return await model
     .where({
       doneTime: { $exists: true },
       title: { $regex: `^${title || ''}` },
     })
     .sort({ doneTime: 'desc', title: 'asc' })
-    .limit(count)
+    .limit(limit)
     .exec()
 }
 
-const listUndone = async (count: number, skip?: number, title?: string) => {
-  return await model
-    .where({
-      doneTime: { $exists: false },
-      title: { $regex: `^${title || ''}` },
-    })
-    .sort({ title: 'asc' })
-    .skip(skip || 0)
-    .limit(count)
-    .exec()
+const listUndone = async (limit: number, skip?: number, title?: string) => {
+  const where = {
+    doneTime: { $exists: false },
+    title: { $regex: `^${title || ''}` },
+  }
+
+  return {
+    list: await model
+      .where(where)
+      .sort({ title: 'asc' })
+      .skip(skip || 0)
+      .limit(limit)
+      .exec(),
+    hasMore: (await model.where(where).count().exec()) > (skip || 0) + limit,
+  }
 }
 
 const deleteAll = async () => {

@@ -21,7 +21,7 @@ const listDone = async (title?: string) => {
 }
 
 const listUndone = async (skip?: number, title?: string) => {
-  return await ItemRepository.listUndone(50, skip, title)
+  return await ItemRepository.listUndone(15, skip, title)
 }
 
 const deleteAll = async () => {
