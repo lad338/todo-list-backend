@@ -21,19 +21,24 @@ const setUndone = async (id: string) => {
     task.doneTime = undefined
     await task.save()
   } else {
-    throw Error(`task not found with id: ${id}`)
+    throw Error(`item not found with id: ${id}`)
   }
 }
 
 const listDone = async (limit: number, title?: string) => {
-  return await model
+  const results = await model
     .where({
       doneTime: { $exists: true },
-      title: { $regex: `^${title || ''}`, $options: 'i' },
     })
-    .sort({ doneTime: 'desc', title: 'asc' })
+    .sort({ doneTime: 'desc' })
     .limit(limit)
     .exec()
+
+  return results
+    .sort((a, b) =>
+      (a.title?.toLowerCase() || '').localeCompare(b.title?.toLowerCase() || '')
+    )
+    .filter((it) => it.title?.startsWith(title || '') || false)
 }
 
 const listUndone = async (limit: number, skip?: number, title?: string) => {
