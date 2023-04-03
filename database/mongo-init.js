@@ -1,5 +1,6 @@
 db = db.getSiblingDB('todo_list')
 db.createCollection('tasks', {
+  collation: { locale: 'en_US', strength: 2 },
   validator: {
     $jsonSchema: {
       bsonType: 'object',
