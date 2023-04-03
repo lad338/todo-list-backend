@@ -1,8 +1,8 @@
-import itemSchema from '../schemas/ItemSchema'
+import taskSchema from '../schemas/TaskSchema'
 import mongoose from 'mongoose'
-import IItem from '../models/entities/IItem'
+import Task from '../models/entities/Task'
 
-const model = mongoose.model('item', itemSchema)
+const model = mongoose.model('task', taskSchema)
 const add = async (title: string) => {
   await model.create({ title })
 }
@@ -11,17 +11,17 @@ const getById = async (id: string) => {
   return model.findById(id).exec()
 }
 
-const save = async (id: string, item: Partial<IItem>) => {
-  await model.findByIdAndUpdate(id, item).exec()
+const save = async (id: string, task: Partial<Task>) => {
+  await model.findByIdAndUpdate(id, task).exec()
 }
 
 const setUndone = async (id: string) => {
-  const item = await model.findById(id).exec()
-  if (item) {
-    item.doneTime = undefined
-    await item.save()
+  const task = await model.findById(id).exec()
+  if (task) {
+    task.doneTime = undefined
+    await task.save()
   } else {
-    throw Error(`item not found with id: ${id}`)
+    throw Error(`task not found with id: ${id}`)
   }
 }
 

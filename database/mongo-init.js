@@ -1,5 +1,5 @@
 db = db.getSiblingDB('todo_list')
-db.createCollection('items', {
+db.createCollection('tasks', {
   validator: {
     $jsonSchema: {
       bsonType: 'object',
@@ -18,13 +18,13 @@ db.createCollection('items', {
   },
 })
 
-db.items.createIndex({
+db.tasks.createIndex({
   doneTime: -1,
 })
-db.items.createIndex({
+db.tasks.createIndex({
   title: 1,
 })
-db.items.createIndex({
+db.tasks.createIndex({
   doneTime: -1,
   title: 1,
 })

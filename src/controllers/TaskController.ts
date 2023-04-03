@@ -1,19 +1,19 @@
 import { Request, Response } from 'express'
-import IAddItemRequest from '../models/requests/AddItemRequest'
-import IPatchItemRequest from '../models/requests/UpdateItemDoneRequest'
-import ItemService from '../services/ItemService'
+import AddTaskRequest from '../models/requests/AddTaskRequest'
+import PatchTaskRequest from '../models/requests/PatchTaskRequest'
+import TaskService from '../services/TaskService'
 
 const add = async (req: Request, res: Response) => {
   try {
-    const body = req.body as IAddItemRequest
-    await ItemService.add(body.title)
+    const body = req.body as AddTaskRequest
+    await TaskService.add(body.title)
 
     res.status(201)
     res.send({
       success: true,
     })
   } catch (e) {
-    console.log(`[error][addItem] e: ${e}`)
+    console.log(`[error][add] e: ${e}`)
     res.status(400)
     res.send({
       success: false,
@@ -24,11 +24,11 @@ const add = async (req: Request, res: Response) => {
 const patch = async (req: Request, res: Response) => {
   try {
     const id = req.params.id as string
-    const body = req.body as IPatchItemRequest
+    const body = req.body as PatchTaskRequest
     if (body.isDone !== undefined) {
-      await ItemService.updateDone(id, body.isDone)
+      await TaskService.updateDone(id, body.isDone)
     } else if (body.title !== undefined) {
-      await ItemService.updateTitle(id, body.title)
+      await TaskService.updateTitle(id, body.title)
     }
 
     res.status(202)
@@ -36,7 +36,7 @@ const patch = async (req: Request, res: Response) => {
       success: true,
     })
   } catch (e) {
-    console.log(`[error][addItem] e: ${e}`)
+    console.log(`[error][patch] e: ${e}`)
     res.status(400)
     res.send({
       success: false,
@@ -50,12 +50,12 @@ const list = async (req: Request, res: Response) => {
     const skip = parseInt(qSkip || '0')
     const qTitle = req.query.title as string | undefined
 
-    const undoneResults = await ItemService.listUndone(skip, qTitle)
+    const undoneResults = await TaskService.listUndone(skip, qTitle)
 
     res.send({
       hasMore: undoneResults.hasMore,
       undone: undoneResults.list,
-      done: await ItemService.listDone(qTitle),
+      done: await TaskService.listDone(qTitle),
     })
   } catch (e) {
     console.log(`[error][list] e: ${e}`)
@@ -68,7 +68,7 @@ const list = async (req: Request, res: Response) => {
 
 const deleteAll = async (req: Request, res: Response) => {
   try {
-    await ItemService.deleteAll()
+    await TaskService.deleteAll()
     res.send({
       success: true,
     })
@@ -84,7 +84,7 @@ const deleteAll = async (req: Request, res: Response) => {
 const deleteById = async (req: Request, res: Response) => {
   try {
     const id = req.params.id as string
-    await ItemService.deleteById(id)
+    await TaskService.deleteById(id)
     res.send({
       success: true,
     })

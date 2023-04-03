@@ -1,8 +1,8 @@
 import { Schema } from 'mongoose'
 
-const itemSchema = new Schema({
+const taskSchema = new Schema({
   title: String,
   doneTime: Date,
 })
 
-export default itemSchema
+export default taskSchema
